@@ -1,0 +1,8 @@
+#hidden
+.*
+
+#vim
+.*.sw*
+Session.vim
+local.vim
+tags
