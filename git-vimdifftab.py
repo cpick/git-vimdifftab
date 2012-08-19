@@ -38,7 +38,7 @@ if script_name == '-c':
 git_diff_rc = subprocess.call(
     ['git', 'difftool', '--no-prompt',
             '--extcmd=' + script_name] + sys.argv[1:])
-if git_diff_rc:
+if git_diff_rc != os.EX_OK:
     raise Error('git difftool failed: ' + str(git_diff_rc))
 
 vim_file_fd, vim_file_name = tempfile.mkstemp('.vim', '', temp_dir, True)
@@ -47,6 +47,7 @@ vim_file = os.fdopen(vim_file_fd, 'a')
 # TODO handle newlines in filenames
 manifest_file = os.fdopen(manifest_file_fd, 'r')
 line_list = []
+changed_file = False
 for line in manifest_file:
     # remove trailing newline and add to list
     line = line[:-1]
@@ -58,6 +59,7 @@ for line in manifest_file:
     file_name1, file_name2 = line_list
     line_list = []
 
+    changed_file = True
     vim_file.write('tabnew\n'
             'silent edit ' + file_name2 + '\n'
             'filetype detect\n'
@@ -72,7 +74,9 @@ vim_file.close()
 if len(line_list):
     raise Error('Unexpected line(s):\n' + '\n'.join(line_list))
 
-vim_rc = subprocess.call(['vim', '-R', '--cmd', 'au VimEnter * so ' + vim_file_name])
+vim_rc = os.EX_OK
+if changed_file:
+    vim_rc = subprocess.call(['vim', '-R', '--cmd', 'au VimEnter * so ' + vim_file_name])
 
 shutil.rmtree(temp_dir)
 sys.exit(vim_rc)
