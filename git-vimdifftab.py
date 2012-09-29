@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Use vimdiff with git, diffing each file in its own tab.
-# @author Chris Pick <vimdifftab@chirspick.com>
+# @author Chris Pick <vimdifftab@chrispick.com>
 # @section LICENSE
 #
 # Copyright 2012 Chris Pick. All rights reserved.
