@@ -95,7 +95,7 @@ for line in manifest_file:
     vim_file.write('tabnew\n'
             'silent edit ' + file_name2 + '\n'
             'filetype detect\n'
-            'silent diffsplit ' + file_name1 + '\n'
+            'silent vertical diffsplit ' + file_name1 + '\n'
             'filetype detect\n')
 
 vim_file.write('tabfirst\n')
