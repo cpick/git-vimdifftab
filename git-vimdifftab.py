@@ -76,6 +76,14 @@ if git_diff_rc != os.EX_OK:
 vim_file_fd, vim_file_name = tempfile.mkstemp('.vim', '', temp_dir, True)
 vim_file = os.fdopen(vim_file_fd, 'a')
 
+repo_root_rel = subprocess.check_output(['git', 'rev-parse',
+        '--show-cdup']).strip()
+def adjust_relative_path(root, path):
+    if os.path.isabs(path):
+        return path
+
+    return os.path.join(root, path)
+
 # TODO handle newlines in filenames
 manifest_file = os.fdopen(manifest_file_fd, 'r')
 line_list = []
@@ -90,6 +98,9 @@ for line in manifest_file:
 
     file_name1, file_name2 = line_list
     line_list = []
+
+    file_name1 = adjust_relative_path(repo_root_rel, file_name1)
+    file_name2 = adjust_relative_path(repo_root_rel, file_name2)
 
     changed_file = True
     vim_file.write('tabnew\n'
