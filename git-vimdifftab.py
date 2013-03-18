@@ -35,7 +35,7 @@
 import sys, subprocess, os, os.path, tempfile, shutil
 
 def copy_if_tmp(file_dir, file_name):
-    # files without that look like temp files need to be copied
+    # files that look like temp files need to be copied
     if not os.path.isabs(file_name): return file_name
 
     file_name_out = os.path.join(file_dir, os.path.basename(file_name))
