@@ -65,13 +65,13 @@ os.putenv('GIT_VIMDIFFTAB', manifest_file_name)
 
 script_name = sys.argv[0]
 if script_name == '-c':
-    raise Error('Script must be called dirctly, not run from interpreter')
+    sys.exit('Script must be called dirctly, not run from interpreter')
 
 git_diff_rc = subprocess.call(
     ['git', 'difftool', '--no-prompt',
             '--extcmd=' + script_name] + sys.argv[1:])
 if git_diff_rc != os.EX_OK:
-    raise Error('git difftool failed: ' + str(git_diff_rc))
+    sys.exit('git difftool failed: ' + str(git_diff_rc))
 
 vim_file_fd, vim_file_name = tempfile.mkstemp('.vim', '', temp_dir, True)
 vim_file = os.fdopen(vim_file_fd, 'a')
@@ -104,7 +104,7 @@ vim_file.close()
 
 # if there was an incomplete record
 if len(line_list):
-    raise Error('Unexpected line(s):\n' + '\n'.join(line_list))
+    sys.exit('Unexpected line(s):\n' + '\n'.join(line_list))
 
 vim_rc = os.EX_OK
 if changed_file:
