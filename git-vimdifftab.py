@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Use vimdiff with git, diffing each file in its own tab.
 # @author Chris Pick <vimdifftab@chrispick.com>
@@ -77,7 +77,7 @@ vim_file_fd, vim_file_name = tempfile.mkstemp('.vim', '', temp_dir, True)
 vim_file = os.fdopen(vim_file_fd, 'a')
 
 repo_root_rel = subprocess.check_output(['git', 'rev-parse',
-        '--show-cdup']).strip()
+        '--show-cdup'], text=True).strip()
 def adjust_relative_path(root, path):
     if os.path.isabs(path):
         return path
