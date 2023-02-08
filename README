@@ -38,9 +38,9 @@ vim
 
 USAGE
 
-git-vimdifftab.py [<git diff arg>...]
+git-vimdifftab [<git diff arg>...]
 
-Optionally, you can also use an alias like the following (git-vimdifftab.py must
+Optionally, you can also use an alias like the following (git-vimdifftab must
 be in your $PATH):
-git config --global alias.dt '!git-vimdifftab.py'
+git config --global alias.dt '!git-vimdifftab'
 git dt
